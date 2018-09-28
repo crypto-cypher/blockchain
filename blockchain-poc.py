@@ -3,11 +3,11 @@
 # Referenced code: https://github.com/dvf/blockchain/blob/master/blockchain.py
 
 """
-NOTE:
-When I was writing this, I learned from a few tutorials.
+NOTE FOR PROFESSOR:
+When we were writing this, we learned from a few tutorials.
 The tutorials that I used had "proof" IDs where the hash verification was done.
 
-I ended up getting stuck & verified with proofs instead of header hashes. ¯\_(ツ)_/¯
+We ended up getting stuck & verified with proofs instead of header hashes. ¯\_(ツ)_/¯
 
 Things to know:
 - Provides immutability for data inserted into blocks using SHA256
@@ -18,10 +18,10 @@ Things to know:
 - All functions should work as expected, regardless of small differences
 
 Functions for testing:
-GET https://127.0.0.1:8080/mine_block?data=<data to add>
-GET http://127.0.0.1:8080/get_blocks
-GET http://127.0.0.1:8080/get_block?index=<block number> (defaults int 0)
-GET https://127.0.0.1:8080/check_blockchain
+GET http://127.0.1.1:8080/mine_block?data=<"data to add">
+GET http://127.0.1.1:8080/get_blocks
+GET http://127.0.1.1:8080/get_block?index=<block number> (defaults int 0)
+GET http://127.0.1.1:8080/check_blockchain
 """
 
 import hashlib
@@ -169,7 +169,7 @@ app = Flask(__name__)
 # Mine a new block
 @app.route('/mine_block', methods=['GET'])
 def mine_block():
-    # GET https://127.0.0.1:8080/mine_block?data=<data to add>
+    # GET https://127.0.1.1:8080/mine_block?data=<data to add>
 
     # Run the proof of work algorithm to get the next proof
     last_block = blockchain.last_block
@@ -194,7 +194,7 @@ def mine_block():
 # Validate the blockchain's legitimacy
 @app.route('/check_blockchain', methods = ['GET'])
 def check_blockchain():
-    # GET https://127.0.0.1:8080/check_blockchain
+    # GET https://127.0.1.1:8080/check_blockchain
 
     blockCheck = blockchain.check_chain(blockchain.chain)
     if blockCheck == True:
@@ -213,7 +213,7 @@ def check_blockchain():
 # Print the all blocks of the blockchain
 @app.route('/get_blocks', methods=['GET'])
 def get_blocks():
-    # GET https://127.0.0.1:8080/get_blocks
+    # GET https://127.0.1.1:8080/get_blocks
 
     response = {
         'chain' : blockchain.chain,
@@ -225,7 +225,7 @@ def get_blocks():
 # Print one block of the blockchain
 @app.route('/get_block', methods = ['GET'])
 def get_block():
-    # GET http://127.0.0.1:8080/get_block?index=<block number>
+    # GET http://127.0.1.1:8080/get_block?index=<block number>
 
     try:
         # 'block request' returns a print of a specified block
@@ -238,4 +238,4 @@ def get_block():
 
 if __name__ == '__main__':
     blockchain = Blockchain()
-    app.run(host = '127.0.0.1', port=8080)
+    app.run(host = '127.0.1.1', port=8080)
