@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+# Referenced tutorial: https://hackernoon.com/learn-blockchains-by-building-one-117428612f46
+# Referenced code: https://github.com/dvf/blockchain/blob/master/blockchain.py
+
 """
 NOTE:
 When I was writing this, I learned from a few tutorials.
