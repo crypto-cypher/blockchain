@@ -54,13 +54,13 @@ class Blockchain:
         # return hash
         return str(hash_id.hexdigest())
 
-
     def add_transaction_to_mempool(self, transaction_id, transaction):
         # validate transaction
+            # check private key of sender (validation)
         # add transaction to self.mempool
+            # add transaction as object in a dict() holding pending transactions (adding)
         # return OK or BAD
         pass
-
 
     def choose_transactions_from_mempool(self):
         # choose 10 random transactions
@@ -208,7 +208,6 @@ def create_transaction():
         return Response(json.dumps({'Result': transaction_id}), status=200, mimetype='application/json')
     else:
         return Response(json.dumps({'Error': 'Invalid transaction'}), status=400, mimetype='application/json')
-
 
 @app.route('/show_mempool', methods = ['GET'])
 def show_mempool():
