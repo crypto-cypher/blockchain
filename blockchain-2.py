@@ -13,7 +13,7 @@ import binascii
 from flask import Flask, request, Response
 
 app = Flask(__name__)
-walletCounter = 0 # wallet identifier
+walletIdentifier = 0 # wallet identifier
 
 class Blockchain:
 
@@ -30,7 +30,7 @@ class Blockchain:
         # define wallet with fields: public_key, private_key, balance
         public_key = binascii.b2a_hex(os.urandom(8))
         private_key = binascii.b2a_hex(os.urandom(8))
-        balance = int(10)
+        balance = float(10)
 
         new_wallet = {
             'public_key' : public_key,
@@ -39,10 +39,9 @@ class Blockchain:
         }
 
         # add new wallet to self.wallets
-        #self.wallets.append(new_wallet)
-        global walletCounter # wallet reference ID
-        walletCounter += 1
-        self.wallets.update({str(walletCounter) : new_wallet})
+        global walletIdentifier # wallet reference ID
+        walletIdentifier += 1
+        self.wallets.update({str(walletIdentifier) : new_wallet})
 
         # return the wallet to caller
         return new_wallet
@@ -157,30 +156,34 @@ class Blockchain:
 def create_wallet():
     return Response(json.dumps(blockchain.create_wallet()), status=200, mimetype='application/json')
 
-
 @app.route('/show_balances', methods = ['GET'])
 def show_balances():
     # clean wallets of private_keys here
-    # blockchain.wallets
 
+    # create empty array for each clean_wallet
     clean_wallets = {}
     for item in blockchain.wallets:
 
+        # add contents to clean_wallet
         clean_wallet = {
             "public_key" : blockchain.wallets[item]["public_key"],
             "balance" : blockchain.wallets[item]["balance"]
         }
 
+        # insert clean_wallet into clean_wallets array
         clean_wallets.update({str(item) : clean_wallet})
 
-    # Returns clean_wallet and sorts keys (or else dict won't be in order)
+    # returns clean_wallets and sorts keys (otherwise dict won't be in order)
     return Response(json.dumps(clean_wallets, sort_keys = True), status=200, mimetype='application/json')
 
+# Function used to show private keys (intentionally left here for testing)
 @app.route('/show_private', methods = ['GET'])
 def show_private():
     return Response(json.dumps(blockchain.wallets), status=200, mimetype='application/json')
 
 @app.route('/create_transaction', methods = ['GET'])
+# http://0.0.0.0:8080/create_transaction?from=<sender>&to=<receiver>&amount=<float>&private_key=<priv>
+
 def create_transaction():
 
     try:
