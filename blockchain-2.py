@@ -163,6 +163,7 @@ def show_balances():
     # clean wallets of private_keys here
     # blockchain.wallets
 
+    clean_wallets = {}
     for item in blockchain.wallets:
 
         clean_wallet = {
@@ -170,10 +171,14 @@ def show_balances():
             "balance" : blockchain.wallets[item]["balance"]
         }
 
-        blockchain.wallets.update({str(item) : clean_wallet})
+        clean_wallets.update({str(item) : clean_wallet})
 
     # Returns clean_wallet and sorts keys (or else dict won't be in order)
-    return Response(json.dumps(blockchain.wallets, sort_keys = True), status=200, mimetype='application/json')
+    return Response(json.dumps(clean_wallets, sort_keys = True), status=200, mimetype='application/json')
+
+@app.route('/show_private', methods = ['GET'])
+def show_private():
+    return Response(json.dumps(blockchain.wallets), status=200, mimetype='application/json')
 
 @app.route('/create_transaction', methods = ['GET'])
 def create_transaction():
