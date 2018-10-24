@@ -1,5 +1,6 @@
 # Reference: http://adilmoujahid.com/posts/2018/03/intro-blockchain-bitcoin-python/
 # Run in Python 2
+# Array problem: https://stackoverflow.com/questions/18931315/typeerror-string-indices-must-be-integers-not-str-working-with-dict
 
 #!/usr/bin/python3
 import json
@@ -12,7 +13,7 @@ import binascii
 from flask import Flask, request, Response
 
 app = Flask(__name__)
-walletCounter = 0
+walletCounter = 0 # wallet identifier
 
 class Blockchain:
 
@@ -38,9 +39,10 @@ class Blockchain:
         }
 
         # add new wallet to self.wallets
+        #self.wallets.append(new_wallet)
         global walletCounter # wallet reference ID
         walletCounter += 1
-        self.wallets.update({walletCounter : new_wallet})
+        self.wallets.update({str(walletCounter) : new_wallet})
 
         # return the wallet to caller
         return new_wallet
@@ -161,8 +163,17 @@ def show_balances():
     # clean wallets of private_keys here
     # blockchain.wallets
 
-    return Response(json.dumps(blockchain.wallets), status=200, mimetype='application/json')
+    for item in blockchain.wallets:
 
+        clean_wallet = {
+            "public_key" : blockchain.wallets[item]["public_key"],
+            "balance" : blockchain.wallets[item]["balance"]
+        }
+
+        blockchain.wallets.update({str(item) : clean_wallet})
+
+    # Returns clean_wallet and sorts keys (or else dict won't be in order)
+    return Response(json.dumps(blockchain.wallets, sort_keys = True), status=200, mimetype='application/json')
 
 @app.route('/create_transaction', methods = ['GET'])
 def create_transaction():
