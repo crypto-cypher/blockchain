@@ -12,12 +12,13 @@ import binascii
 from flask import Flask, request, Response
 
 app = Flask(__name__)
+walletCounter = 0
 
 class Blockchain:
 
     def __init__(self):
         self.chain = []
-        self.wallets = [] # was {}
+        self.wallets = {}
         self.mempool = {}
         self.difficulty_target = 4
         self.mine_block()
@@ -37,7 +38,9 @@ class Blockchain:
         }
 
         # add new wallet to self.wallets
-        self.wallets.append(new_wallet)
+        global walletCounter # wallet reference ID
+        walletCounter += 1
+        self.wallets.update({walletCounter : new_wallet})
 
         # return the wallet to caller
         return new_wallet
