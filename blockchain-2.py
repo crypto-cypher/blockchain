@@ -162,16 +162,16 @@ def show_balances():
 
     # create empty array for each clean_wallet
     clean_wallets = {}
-    for item in blockchain.wallets:
+    for wallet in blockchain.wallets:
 
         # add contents to clean_wallet
         clean_wallet = {
-            "public_key" : blockchain.wallets[item]["public_key"],
-            "balance" : blockchain.wallets[item]["balance"]
+            "public_key" : blockchain.wallets[wallet]["public_key"],
+            "balance" : blockchain.wallets[wallet]["balance"]
         }
 
         # insert clean_wallet into clean_wallets array
-        clean_wallets.update({str(item) : clean_wallet})
+        clean_wallets.update({str(wallet) : clean_wallet})
 
     # returns clean_wallets and sorts keys (otherwise dict won't be in order)
     return Response(json.dumps(clean_wallets, sort_keys = True), status=200, mimetype='application/json')
