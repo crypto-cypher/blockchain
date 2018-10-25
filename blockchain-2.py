@@ -56,11 +56,23 @@ class Blockchain:
 
     def add_transaction_to_mempool(self, transaction_id, transaction):
         # validate transaction
-            # check private key of sender (validation)
-        # add transaction to self.mempool
-            # add transaction as object in a dict() holding pending transactions (adding)
+        # if blockchain.wallets[transaction['from']] == blockchain.wallets[walletIdentifier][private_key]:
+            # valid
+        # else:
+            # invalid
+
+        # create dict() object to add to mempool
+        mempool_obj = {
+            'from' : blockchain.wallets[transaction['from']],
+            'to' : blockchain.wallets[transaction['to']],
+            'amount' : blockchain.wallets[transaction['amount']]
+        }
+
+        # reference object by hash & add object to mempool
+        self.mempool.update({str(transaction_id) : mempool_obj})
+
         # return OK or BAD
-        pass
+        return True
 
     def choose_transactions_from_mempool(self):
         # choose 10 random transactions
@@ -70,7 +82,6 @@ class Blockchain:
         # remove transactions from mempool
         # return transaction to caller
         pass
-
 
     def calculate_merkle_root(self, block):
         # calculate the merkle root
@@ -199,7 +210,7 @@ def create_transaction():
         assert private_key == blockchain.wallets[transaction['from']]['private_key']
 
     except:
-        return Response(json.dumps({'Error': 'Invalid transaction'}), status=400, mimetype='application/json')
+        return Response(json.dumps({'Error': 'Invalid transaction (err 1)'}), status=400, mimetype='application/json')
 
     transaction_id = blockchain.hash_transaction(transaction)
     transaction_ok = blockchain.add_transaction_to_mempool(transaction_id, transaction)
@@ -207,7 +218,7 @@ def create_transaction():
     if transaction_ok:
         return Response(json.dumps({'Result': transaction_id}), status=200, mimetype='application/json')
     else:
-        return Response(json.dumps({'Error': 'Invalid transaction'}), status=400, mimetype='application/json')
+        return Response(json.dumps({'Error': 'Invalid transaction (err 2)'}), status=400, mimetype='application/json')
 
 @app.route('/show_mempool', methods = ['GET'])
 def show_mempool():
