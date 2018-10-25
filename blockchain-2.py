@@ -1,6 +1,10 @@
-# Reference: http://adilmoujahid.com/posts/2018/03/intro-blockchain-bitcoin-python/
+# Trevor Giffen (100622337) and Mohammad Ayoubi (100361607)
 # Run in Python 2
-# Array problem: https://stackoverflow.com/questions/18931315/typeerror-string-indices-must-be-integers-not-str-working-with-dict
+
+"""
+Wallet creation & display works as expected.
+We had challenges properly developing the rest.
+"""
 
 #!/usr/bin/python3
 import json
@@ -61,18 +65,21 @@ class Blockchain:
         # else:
             # invalid
 
-        # create dict() object to add to mempool
-        mempool_obj = {
-            'from' : blockchain.wallets[transaction['from']],
-            'to' : blockchain.wallets[transaction['to']],
-            'amount' : blockchain.wallets[transaction['amount']]
-        }
+        # return OK (true) or Bad (false) & add obj to mempool
+        try:
+            # create dict() object to add to mempool
+            mempool_obj = {
+                'from' : blockchain.wallets[transaction['from']],
+                'to' : blockchain.wallets[transaction['to']],
+                'amount' : blockchain.wallets[transaction['amount']]
+            }
+            # reference object by hash & add object to mempool
+            self.mempool.update({str(transaction_id) : mempool_obj})
 
-        # reference object by hash & add object to mempool
-        self.mempool.update({str(transaction_id) : mempool_obj})
+            return True
 
-        # return OK or BAD
-        return True
+        except:
+            return False
 
     def choose_transactions_from_mempool(self):
         # choose 10 random transactions
@@ -85,6 +92,10 @@ class Blockchain:
 
     def calculate_merkle_root(self, block):
         # calculate the merkle root
+            # get each transaction ID
+            # put transaction IDs into pairs
+            # perform hash() on those pairs of hashes
+            # repeat until all transactions meet at a single hash (merkle root)
         # return the merkle root (hash)
         pass
 
