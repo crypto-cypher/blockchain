@@ -3,7 +3,7 @@
 
 """
 Wallet creation & display works as expected.
-We had challenges properly developing the rest.
+We had challenges developing the assignment to completion in at imely manner.
 """
 
 #!/usr/bin/python3
