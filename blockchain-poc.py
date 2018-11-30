@@ -3,7 +3,7 @@
 # Referenced code: https://github.com/dvf/blockchain/blob/master/blockchain.py
 
 """
-NOTE FOR PROFESSOR:
+NOTE:
 When we were writing this, we learned from a few tutorials.
 The tutorials that I used had "proof" IDs where the hash verification was done.
 
