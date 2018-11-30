@@ -1,2 +1,2 @@
 # blockchain
-A repository for blockchain assignments and experimentation.
+A repository for blockchain proof of concept experimentation.
