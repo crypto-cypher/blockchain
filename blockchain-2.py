@@ -1,10 +1,8 @@
 # Reference: http://adilmoujahid.com/posts/2018/03/intro-blockchain-bitcoin-python/
-# Trevor Giffen (100622337) and Mohammad Ayoubi (100361607)
-# Run in Python 2
 
 """
 Successfully creates wallets, shows them without private_keys, and hashes transactions
-Due to time restraint/schedules, we were unable to fully finish the assignment
+Due to time restraint/schedules, this is unfinished
 """
 
 #!/usr/bin/python3
